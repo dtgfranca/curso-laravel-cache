@@ -17,4 +17,9 @@ class CourseRepository
     {
         return $this->course->get();
     }
+
+    public function store(array $data)
+    {
+        return $this->course->create($data);
+    }
 }

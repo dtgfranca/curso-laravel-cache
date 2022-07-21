@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 Route::get('/courses', [\App\Http\Controllers\Api\CourseController::class, 'index']);
+Route::post('/courses', [\App\Http\Controllers\Api\CourseController::class, 'store']);
 Route::get('/', function(){
     return response()->json(['message'=>'ok']);
 });
