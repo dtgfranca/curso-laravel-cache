@@ -17,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-Route::get('/courses', [\App\Http\Controllers\Api\CourseController::class, 'index']);
+Route::apiResource('/modules/{module}/lessons', \App\Http\Controllers\Api\LessonController::class);
+Route::apiResource('/courses/{course}/modules', \App\Http\Controllers\Api\ModuleController::class);
+Route::put('/courses/{course}', [\App\Http\Controllers\Api\CourseController::class, 'update']);
+Route::delete('/courses/{identify}', [\App\Http\Controllers\Api\CourseController::class, 'destroy']);
+Route::get('/courses/{identify}', [\App\Http\Controllers\Api\CourseController::class, 'show']);
 Route::post('/courses', [\App\Http\Controllers\Api\CourseController::class, 'store']);
-Route::get('/', function(){
-    return response()->json(['message'=>'ok']);
-});
+Route::get('/courses', [\App\Http\Controllers\Api\CourseController::class, 'index']);
+
+

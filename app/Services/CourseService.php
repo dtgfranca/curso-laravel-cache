@@ -18,7 +18,22 @@ class CourseService
 
     public function store(array $data)
     {
-        $this->courseRepository->store($data);
+        return $this->courseRepository->store($data);
+    }
+
+    public function get(string $identify)
+    {
+        $this->courseRepository->getCourseByUuid($identify);
+    }
+
+    public function deleteCourse(string $identify)
+    {
+        return $this->courseRepository->deleteByUuid($identify);
+    }
+
+    public function udpate(string $identify, array $data)
+    {
+        return $this->courseRepository->updateCouseByUuid($identify, $data);
     }
 
 }

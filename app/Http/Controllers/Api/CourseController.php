@@ -10,10 +10,13 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
+
+
     private CourseService $courseService;
 
     public function __construct(CourseService $courseService)
     {
+
         $this->courseService = $courseService;
     }
 
@@ -37,7 +40,6 @@ class CourseController extends Controller
      */
     public function store(CourseUpdateRequest $request)
     {
-        //
         $course = $this->courseService->store($request->validated());
         return new CourseResource($course);
     }
@@ -48,21 +50,23 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($identify)
     {
-        //
+        $course = $this->courseService->get($identify);
+        return new CourseResource($course);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $identify
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CourseUpdateRequest $request, $identify)
     {
-        //
+        $this->courseService->udpate($identify, $request->validated());
+        return response()->json(['message'=>'updated']);
     }
 
     /**
@@ -71,8 +75,9 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($identify)
     {
-        //
+        $this->courseService->deleteCourse($identify);
+        return response()->json([],204);
     }
 }
