@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Course;
+use Illuminate\Support\Facades\Cache;
+use function PHPUnit\TestFixture\func;
 
 class CourseRepository
 {
@@ -15,17 +17,24 @@ class CourseRepository
 
     public function getAll()
     {
-        return $this->course->get();
+        return Cache::rememberForever('courses', function(){
+            return $this->course
+                ->with('modules.lessons')
+                ->get();
+        });
     }
 
     public function store(array $data)
     {
+        Cache::forget('courses');
         return $this->course->create($data);
     }
 
     public function getCourseByUuid(string $identify)
     {
-        return $this->course->where('uuid', $identify)->firstOrFail();
+        return $this->course->where('uuid', $identify)
+            ->with('modules.lessons')
+            ->firstOrFail();
     }
     public function deleteByUuid(string $identify)
     {
@@ -35,6 +44,7 @@ class CourseRepository
 
     public function updateCouseByUuid(string $identify, array $data)
     {
+        Cache::forget('courses');
         return $this->getCourseByUuid($identify)->update($data);
     }
 

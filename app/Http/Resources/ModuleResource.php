@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ModuleResource extends JsonResource
@@ -14,6 +15,11 @@ class ModuleResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return[
+            'name'=>$this->name,
+            'uuid'=>$this->uuid,
+            'lesson'=> LessonResource::collection($this->whenLoaded('lessons')),
+            'date'=>Carbon::make($this->created_at)->format('Y-m-d')
+        ];
     }
 }
