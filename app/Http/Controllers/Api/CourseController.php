@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Domain\Entities\Course;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Http\Resources\CourseResource;
 use App\Services\CourseService;
 use Illuminate\Http\Request;
+
 
 class CourseController extends Controller
 {
@@ -26,7 +28,11 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { $course = new Course();
+        $course->setName("Curso Laravel Clean Arch")
+            ->setDescription("Um novo conceito sobre o desenvolvimento com laravel ");
+
+        dd($course);
         $courses = $this->courseService->getAll();
         return CourseResource::collection($courses);
         //
