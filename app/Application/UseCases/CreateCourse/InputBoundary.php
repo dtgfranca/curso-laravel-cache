@@ -1,9 +1,9 @@
 <?php
-namespace App\Application\Usecases\CreateCourse;
+namespace App\Application\UseCases\CreateCourse;
 
 final class InputBoundary
 {
-    private string $name;
+    private  string $name;
     private string $description;
 
     public function __construct(array $params)
