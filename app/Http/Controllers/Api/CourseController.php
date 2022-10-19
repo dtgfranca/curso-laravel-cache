@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Application\UseCases\CreateCourse\CreateCourse;
+use App\Application\UseCases\CreateCourse\InputBoundary;
 use App\Domain\Entities\Course;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseUpdateRequest;
@@ -28,11 +30,10 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { $course = new Course();
-        $course->setName("Curso Laravel Clean Arch")
-            ->setDescription("Um novo conceito sobre o desenvolvimento com laravel ");
+    {
+        $course = new CreateCourse();
+        dd($course->handle(new InputBoundary(['name'=>"teste de curso", 'description'=>"Nossos testes"])));
 
-        dd($course);
         $courses = $this->courseService->getAll();
         return CourseResource::collection($courses);
         //
